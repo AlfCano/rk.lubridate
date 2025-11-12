@@ -1,0 +1,31 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<code file="ApplyStampingFunction.js" />
+	<help file="ApplyStampingFunction.rkh" />
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<logic>
+		<!--
+			<convert id="!edit!" sources="!edit!" mode="equals" standard="!edit!" />
+		-->
+		<!--
+			<connect governor="!edit!.state" client="!edit!.enabled" />
+		-->
+	</logic>
+	<dialog label="Format Dates as Text (with Stamping Function)">
+		<row id="row_vrslSSSSSS">
+			<varselector id="dt_varselector" />
+			<column id="clm_vrsltddSSS">
+				<varslot id="dt_object" label="Select a date-time object" source="dt_varselector" required="true" />
+				<varslot id="stamp_fun_slot" label="Select stamping function" source="dt_varselector" required="true" />
+				<saveobject label="Save result as" checkable="true" checked="true" initial="formatted_dates" id="save_result" />
+			</column>
+		</row>
+	</dialog>
+</document>

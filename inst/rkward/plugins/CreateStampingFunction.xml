@@ -1,0 +1,55 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<code file="CreateStampingFunction.js" />
+	<help file="CreateStampingFunction.rkh" />
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<logic>
+		<!--
+			<convert id="!edit!" sources="!edit!" mode="equals" standard="!edit!" />
+		-->
+		<!--
+			<connect governor="!edit!.state" client="!edit!.enabled" />
+		-->
+	</logic>
+	<dialog label="Create Language-Specific Stamping Function">
+		<column id="clm_fFMFMSFDFN">
+			<frame label="Formatting Method" id="frm_FrmttngM">
+				<dropdown id="stamp_preset_dropdown" label="Select a preset format">
+					<option label="Full Date (e.g., 'Friday, November 21, 2025')" value="'%A, %B %d, %Y'" checked="true" />
+					<option label="Spanish Full (e.g., 'Hoy es lunes, 10-11-2025')" value="'Hoy es %A, %d-%m-%Y'" />
+					<option label="ISO Date (e.g., '2025-11-21')" value="'%Y-%m-%d'" />
+					<option label="US Style Short (e.g., '11/21/25')" value="'%m/%d/%y'" />
+					<option label="EU Style Short (e.g., '21/11/25')" value="'%d/%m/%y'" />
+					<option label="Abbreviated (e.g., 'Fri, 21 Nov 2025')" value="'%a, %d %b %Y'" />
+					<option label="Full Timestamp (e.g., '2025-11-21 15:30:00')" value="'%Y-%m-%d %H:%M:%S'" />
+					<option label="Time Only (e.g., '03:30:00 PM')" value="'%I:%M:%S %p'" />
+					<option label="Day of Year (e.g., 'Day 325 of 2025')" value="'Day %j of %Y'" />
+					<option label="Week of Year (e.g., 'Week 47 of 2025')" value="'Week %U of %Y'" />
+				</dropdown>
+				<input label="OR enter a custom format string (as R code)" id="stamp_custom_input" />
+			</frame>
+			<frame label="Language for Function" id="frm_LnggfrFn">
+				<dropdown id="locale_select" label="Output Language (Locale)">
+					<option label="System Default" value="" checked="true" />
+					<option label="English (USA)" value="en_US.UTF-8" />
+					<option label="French (France)" value="fr_FR.UTF-8" />
+					<option label="German (Germany)" value="de_DE.UTF-8" />
+					<option label="Spanish (Spain)" value="es_ES.UTF-8" />
+					<option label="Portuguese (Portugal)" value="pt_PT.UTF-8" />
+					<option label="Italian (Italy)" value="it_IT.UTF-8" />
+				</dropdown>
+				<text id="txt_NtExOSFW">
+					Note: Exact names for locales can vary by OS (e.g., 'French' on Windows).
+				</text>
+			</frame>
+			<saveobject label="Save result as" checkable="true" checked="true" initial="lubridate_result" id="save_result" />
+		</column>
+	</dialog>
+</document>

@@ -1,0 +1,38 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<code file="CreateDurations.js" />
+	<help file="CreateDurations.rkh" />
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<logic>
+		<!--
+			<convert id="!edit!" sources="!edit!" mode="equals" standard="!edit!" />
+		-->
+		<!--
+			<connect governor="!edit!.state" client="!edit!.enabled" />
+		-->
+	</logic>
+	<dialog label="Create Durations (exact seconds)">
+		<column id="clm_sV10UYWDHM">
+			<spinbox label="Value" id="duration_val" initial="1" min="0" />
+			<dropdown id="duration_unit" label="Unit">
+				<option label="Years" value="dyears" checked="true" />
+				<option label="Weeks" value="dweeks" />
+				<option label="Days" value="ddays" />
+				<option label="Hours" value="dhours" />
+				<option label="Minutes" value="dminutes" />
+				<option label="Seconds" value="dseconds" />
+			</dropdown>
+			<text id="txt_Usfrxctt">
+				Use for exact time measurements, handles leap years correctly.
+			</text>
+			<saveobject label="Save duration as" checkable="true" checked="true" initial="lubridate_duration" id="save_duration" />
+		</column>
+	</dialog>
+</document>

@@ -1,0 +1,39 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<code file="CreatePeriods.js" />
+	<help file="CreatePeriods.rkh" />
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<logic>
+		<!--
+			<convert id="!edit!" sources="!edit!" mode="equals" standard="!edit!" />
+		-->
+		<!--
+			<connect governor="!edit!.state" client="!edit!.enabled" />
+		-->
+	</logic>
+	<dialog label="Create Periods (human units)">
+		<column id="clm_sV10UYMWDH">
+			<spinbox label="Value" id="period_val" initial="1" min="0" />
+			<dropdown id="period_unit" label="Unit">
+				<option label="Years" value="years" checked="true" />
+				<option label="Months" value="months" />
+				<option label="Weeks" value="weeks" />
+				<option label="Days" value="days" />
+				<option label="Hours" value="hours" />
+				<option label="Minutes" value="minutes" />
+				<option label="Seconds" value="seconds" />
+			</dropdown>
+			<text id="txt_Usfrhmnc">
+				Use for human-centric times, like 'one month from today'.
+			</text>
+			<saveobject label="Save period as" checkable="true" checked="true" initial="lubridate_period" id="save_period" />
+		</column>
+	</dialog>
+</document>

@@ -1,0 +1,58 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<code file="FormatDatesasText.js" />
+	<help file="FormatDatesasText.rkh" />
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<logic>
+		<!--
+			<convert id="!edit!" sources="!edit!" mode="equals" standard="!edit!" />
+		-->
+		<!--
+			<connect governor="!edit!.state" client="!edit!.enabled" />
+		-->
+	</logic>
+	<dialog label="Format Dates as Text (with Format String)">
+		<row id="row_vSFMFMSYYY">
+			<varselector id="dt_varselector" />
+			<column id="clm_vSFMFMSYYY">
+				<varslot id="dt_object" label="Select a date-time object" source="dt_varselector" required="true" />
+				<frame label="Formatting Method" id="frm_FrmttngM">
+					<dropdown id="format_preset_dropdown" label="Select a preset format">
+						<option label="YYYY-MM-DD (e.g., 2025-11-21)" value="%Y-%m-%d" checked="true" />
+						<option label="Month Day, Year (e.g., November 21, 2025)" value="%B %d, %Y" />
+						<option label="Weekday, Month Day, Year (e.g., Friday, November 21, 2025)" value="%A, %B %d, %Y" />
+						<option label="MM/DD/YY (e.g., 11/21/25)" value="%m/%d/%y" />
+						<option label="Full ISO DateTime (e.g., 2025-11-21 15:30:00)" value="%Y-%m-%d %H:%M:%S" />
+						<option label="12-Hour Time (e.g., 03:30:00 PM)" value="%I:%M:%S %p" />
+					</dropdown>
+					<input label="OR enter a custom format string" id="format_custom_input" />
+					<text id="txt_CstmfrmR">
+						Custom format uses R standard codes, e.g., '%d/%m/%y'.
+					</text>
+				</frame>
+				<frame label="Language" id="frm_Language">
+					<dropdown id="locale_select" label="Output Language (Locale)">
+						<option label="System Default" value="" checked="true" />
+						<option label="English (USA)" value="en_US.UTF-8" />
+						<option label="French (France)" value="fr_FR.UTF-8" />
+						<option label="German (Germany)" value="de_DE.UTF-8" />
+						<option label="Spanish (Spain)" value="es_ES.UTF-8" />
+						<option label="Portuguese (Portugal)" value="pt_PT.UTF-8" />
+						<option label="Italian (Italy)" value="it_IT.UTF-8" />
+					</dropdown>
+					<text id="txt_NtExOSFW">
+						Note: Exact names for locales can vary by OS (e.g., 'French' on Windows).
+					</text>
+				</frame>
+				<saveobject label="Save formatted text as" checkable="true" checked="true" initial="formatted_dates" id="save_result" />
+			</column>
+		</row>
+	</dialog>
+</document>

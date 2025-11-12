@@ -1,0 +1,292 @@
+<!DOCTYPE
+	rkpluginmap
+>
+<document
+	base_prefix=""
+	namespace="ParseDateTimeswithlubridate"
+	id="ParseDateTimeswithlubridate_rkward"
+	po_id="ParseDateTimeswithlubridate_rkward"
+	priority="medium"
+>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<about
+		name="rk.lubridate"
+		shortinfo="An RKWard plugin package for working with dates and times data using the 'lubridate' library."
+		longinfo="An RKWard plugin package for working with dates and times data using the 'lubridate' library."
+		version="0.0.1"
+		releasedate="2025-11-11"
+		url="https://github.com/AlfCano/rk.lubridate"
+		license="GPL (&gt;= 3)"
+	>
+		<author
+			given="Alfonso"
+			family="Cano Robles"
+			email="alfonso.cano@correo.buap.mx"
+			role="aut, cre"
+		/>
+	</about>
+	<require
+		map="rkward::menu"
+	/>
+	<require
+		map="rkward::embedded"
+	/>
+	<components>
+		<component
+			id="cmp_PrsDtTmswthlbrdtFrmtDtssT"
+			label="Format Dates as Text"
+			type="standard"
+			file="plugins/FormatDatesasText.xml"
+		>
+		</component>
+		<component
+			id="cmp_PrsDtTmswthlbrdtApplyStmF"
+			label="Apply Stamping Function"
+			type="standard"
+			file="plugins/ApplyStampingFunction.xml"
+		>
+		</component>
+		<component
+			id="cmp_PrsDtTmswthlbrdtCrtStmpnF"
+			label="Create Stamping Function"
+			type="standard"
+			file="plugins/CreateStampingFunction.xml"
+		>
+		</component>
+		<component
+			id="cmp_PrsDtTmswthlbrdtGtCmpnntD"
+			label="Get Component from Date"
+			type="standard"
+			file="plugins/GetComponentfromDate.xml"
+		>
+		</component>
+		<component
+			id="cmp_PrsDtTmswthlbrdtStCmpnntD"
+			label="Set Component in Date"
+			type="standard"
+			file="plugins/SetComponentinDate.xml"
+		>
+		</component>
+		<component
+			id="cmp_ParsDtTmswthlbrdtRndDtTms"
+			label="Round Date-Times"
+			type="standard"
+			file="plugins/RoundDateTimes.xml"
+		>
+		</component>
+		<component
+			id="cmp_ParseDateTmswthlbrdtTmZns"
+			label="Time Zones"
+			type="standard"
+			file="plugins/TimeZones.xml"
+		>
+		</component>
+		<component
+			id="cmp_ParseDtTmswthlbrdtCrtPrds"
+			label="Create Periods"
+			type="standard"
+			file="plugins/CreatePeriods.xml"
+		>
+		</component>
+		<component
+			id="cmp_ParsDtTmswthlbrdtCrtDrtns"
+			label="Create Durations"
+			type="standard"
+			file="plugins/CreateDurations.xml"
+		>
+		</component>
+		<component
+			id="cmp_PrsDtTmswthlbrdtCrtIntrvl"
+			label="Create Intervals"
+			type="standard"
+			file="plugins/CreateIntervals.xml"
+		>
+		</component>
+		<component
+			id="cmp_PrsDtTmswthlbrdtPrsDtTmsw"
+			label="Parse Date-Times with lubridate"
+			type="standard"
+			file="plugins/ParseDateTimeswithlubridate.xml"
+		>
+		</component>
+	</components>
+	<hierarchy>
+		<menu
+			id="data"
+			label="Data"
+		>
+			<menu
+				id="DateandTimelubridate"
+				label="Date and Time (lubridate)"
+			>
+				<entry
+					component="cmp_PrsDtTmswthlbrdtFrmtDtssT"
+				/>
+			</menu>
+		</menu>
+		<menu
+			id="data"
+			label="Data"
+		>
+			<menu
+				id="DateandTimelubridate"
+				label="Date and Time (lubridate)"
+			>
+				<entry
+					component="cmp_PrsDtTmswthlbrdtApplyStmF"
+				/>
+			</menu>
+		</menu>
+		<menu
+			id="data"
+			label="Data"
+		>
+			<menu
+				id="DateandTimelubridate"
+				label="Date and Time (lubridate)"
+			>
+				<entry
+					component="cmp_PrsDtTmswthlbrdtCrtStmpnF"
+				/>
+			</menu>
+		</menu>
+		<menu
+			id="data"
+			label="Data"
+		>
+			<menu
+				id="DateandTimelubridate"
+				label="Date and Time (lubridate)"
+			>
+				<entry
+					component="cmp_PrsDtTmswthlbrdtGtCmpnntD"
+				/>
+			</menu>
+		</menu>
+		<menu
+			id="data"
+			label="Data"
+		>
+			<menu
+				id="DateandTimelubridate"
+				label="Date and Time (lubridate)"
+			>
+				<entry
+					component="cmp_PrsDtTmswthlbrdtStCmpnntD"
+				/>
+			</menu>
+		</menu>
+		<menu
+			id="data"
+			label="Data"
+		>
+			<menu
+				id="DateandTimelubridate"
+				label="Date and Time (lubridate)"
+			>
+				<entry
+					component="cmp_ParsDtTmswthlbrdtRndDtTms"
+				/>
+			</menu>
+		</menu>
+		<menu
+			id="data"
+			label="Data"
+		>
+			<menu
+				id="DateandTimelubridate"
+				label="Date and Time (lubridate)"
+			>
+				<entry
+					component="cmp_ParseDateTmswthlbrdtTmZns"
+				/>
+			</menu>
+		</menu>
+		<menu
+			id="data"
+			label="Data"
+		>
+			<menu
+				id="DateandTimelubridate"
+				label="Date and Time (lubridate)"
+			>
+				<menu
+					id="TimeSpans"
+					label="Time Spans"
+				>
+					<entry
+						component="cmp_ParseDtTmswthlbrdtCrtPrds"
+					/>
+				</menu>
+			</menu>
+		</menu>
+		<menu
+			id="data"
+			label="Data"
+		>
+			<menu
+				id="DateandTimelubridate"
+				label="Date and Time (lubridate)"
+			>
+				<menu
+					id="TimeSpans"
+					label="Time Spans"
+				>
+					<entry
+						component="cmp_ParsDtTmswthlbrdtCrtDrtns"
+					/>
+				</menu>
+			</menu>
+		</menu>
+		<menu
+			id="data"
+			label="Data"
+		>
+			<menu
+				id="DateandTimelubridate"
+				label="Date and Time (lubridate)"
+			>
+				<menu
+					id="TimeSpans"
+					label="Time Spans"
+				>
+					<entry
+						component="cmp_PrsDtTmswthlbrdtCrtIntrvl"
+					/>
+				</menu>
+			</menu>
+		</menu>
+		<menu
+			id="data"
+			label="Data"
+		>
+			<menu
+				id="DateandTimelubridate"
+				label="Date and Time (lubridate)"
+			>
+				<entry
+					component="cmp_PrsDtTmswthlbrdtPrsDtTmsw"
+				/>
+			</menu>
+		</menu>
+	</hierarchy>
+	<!--
+		<context
+			id="x11"
+		>
+		</context>
+	-->
+	<!--
+		<context
+			id="import"
+		>
+		</context>
+	-->
+</document>

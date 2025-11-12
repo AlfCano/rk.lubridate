@@ -1,0 +1,41 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<code file="GetComponentfromDate.js" />
+	<help file="GetComponentfromDate.rkh" />
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<logic>
+		<!--
+			<convert id="!edit!" sources="!edit!" mode="equals" standard="!edit!" />
+		-->
+		<!--
+			<connect governor="!edit!.state" client="!edit!.enabled" />
+		-->
+	</logic>
+	<dialog label="Get Component from Date">
+		<row id="row_vSCYMDHMSW">
+			<varselector id="dt_varselector" />
+			<column id="clm_vSCYMDHMSW">
+				<varslot id="dt_object" label="Select a date-time object" source="dt_varselector" required="true" />
+				<dropdown id="get_comp" label="Component to get">
+					<option label="Year" value="year" checked="true" />
+					<option label="Month" value="month" />
+					<option label="Day" value="day" />
+					<option label="Hour" value="hour" />
+					<option label="Minute" value="minute" />
+					<option label="Second" value="second" />
+					<option label="Week" value="week" />
+					<option label="Day of year" value="yday" />
+				</dropdown>
+				<checkbox id="get_label" label="Get label (e.g., 'January')" value="true" />
+				<saveobject label="Save result as" checkable="true" checked="true" initial="lubridate_result" id="save_result" />
+			</column>
+		</row>
+	</dialog>
+</document>

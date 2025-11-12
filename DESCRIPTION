@@ -1,0 +1,17 @@
+Package: rk.lubridate
+Type: Package
+Title: An RKWard plugin package for working with dates and times data
+        using the 'lubridate' library.
+Version: 0.0.1
+Date: 2025-11-11
+Author: Alfonso Cano Robles
+Maintainer: Alfonso Cano Robles <alfonso.cano@correo.buap.mx>
+Enhances: rkward
+Description: An RKWard plugin package for working with dates and times
+        data using the 'lubridate' library.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyLoad: yes
+URL: https://github.com/AlfCano/rk.lubridate
+Authors@R: person(given="Alfonso", family="Cano Robles",
+        email="alfonso.cano@correo.buap.mx", role=c("aut", "cre"))

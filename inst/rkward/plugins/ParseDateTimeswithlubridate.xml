@@ -1,0 +1,40 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<code file="ParseDateTimeswithlubridate.js" />
+	<help file="ParseDateTimeswithlubridate.rkh" />
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<logic>
+		<!--
+			<convert id="!edit!" sources="!edit!" mode="equals" standard="!edit!" />
+		-->
+		<!--
+			<connect governor="!edit!.state" client="!edit!.enabled" />
+		-->
+	</logic>
+	<dialog label="Parse Date-Times with lubridate">
+		<row id="row_vDSDSOOR20">
+			<varselector id="parse_varselector" />
+			<column id="clm_fDSDSOOR20">
+				<frame label="Data Source" id="frm_DataSorc">
+					<varslot id="parse_varslot" label="Object with date-time strings" source="parse_varselector" />
+					<input label="OR enter a vector manually (e.g., c('2025-01-20'))" id="parse_manual_input" />
+				</frame>
+				<dropdown id="parse_order" label="Select parsing order">
+					<option label="Year, Month, Day" value="ymd" checked="true" />
+					<option label="Year, Month, Day, Hour, Minute, Second" value="ymd_hms" />
+					<option label="Month, Day, Year" value="mdy" />
+					<option label="Day, Month, Year" value="dmy" />
+				</dropdown>
+				<input label="Optional: Time zone" id="parse_tz" />
+				<saveobject label="Save result as" checkable="true" checked="true" initial="lubridate_result" id="save_result" />
+			</column>
+		</row>
+	</dialog>
+</document>
