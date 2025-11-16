@@ -22,7 +22,9 @@ function printout(is_preview){
 
     var save_name = getValue("save_result.objectname");
     echo("rk.header(\"lubridate Operation Results\")\n");
-    echo("rk.header(\"Result saved to object: " + save_name + "\", level=3)\n");
+    if(getValue("save_result.active")){
+      echo("rk.header(\"Result saved to object: " + save_name + "\", level=3)\n");
+    }
   
 	//// save result object
 	// read in saveobject variables

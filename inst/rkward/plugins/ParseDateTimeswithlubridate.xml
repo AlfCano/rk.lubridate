@@ -26,15 +26,36 @@
 					<varslot id="parse_varslot" label="Object with date-time strings" source="parse_varselector" />
 					<input label="OR enter a vector manually (e.g., c('2025-01-20'))" id="parse_manual_input" />
 				</frame>
-				<dropdown id="parse_order" label="Select parsing order">
-					<option label="Year, Month, Day" value="ymd" checked="true" />
-					<option label="Year, Month, Day, Hour, Minute, Second" value="ymd_hms" />
-					<option label="Month, Day, Year" value="mdy" />
-					<option label="Day, Month, Year" value="dmy" />
+				<dropdown id="parse_order" label="Select parsing function">
+					<option label="ymd" value="ymd" checked="true" />
+					<option label="ymd_h" value="ymd_h" />
+					<option label="ymd_hm" value="ymd_hm" />
+					<option label="ymd_hms" value="ymd_hms" />
+					<option label="ydm" value="ydm" />
+					<option label="ydm_h" value="ydm_h" />
+					<option label="ydm_hm" value="ydm_hm" />
+					<option label="ydm_hms" value="ydm_hms" />
+					<option label="mdy" value="mdy" />
+					<option label="mdy_h" value="mdy_h" />
+					<option label="mdy_hm" value="mdy_hm" />
+					<option label="mdy_hms" value="mdy_hms" />
+					<option label="myd" value="myd" />
+					<option label="myd_h" value="myd_h" />
+					<option label="myd_hm" value="myd_hm" />
+					<option label="myd_hms" value="myd_hms" />
+					<option label="dmy" value="dmy" />
+					<option label="dmy_h" value="dmy_h" />
+					<option label="dmy_hm" value="dmy_hm" />
+					<option label="dmy_hms" value="dmy_hms" />
+					<option label="dym" value="dym" />
+					<option label="dym_h" value="dym_h" />
+					<option label="dym_hm" value="dym_hm" />
+					<option label="dym_hms" value="dym_hms" />
 				</dropdown>
 				<input label="Optional: Time zone" id="parse_tz" />
 				<saveobject label="Save result as" checkable="true" checked="true" initial="lubridate_result" id="save_result" />
 			</column>
+			<preview label="Preview" id="prv_Preview" mode="data" />
 		</row>
 	</dialog>
 </document>

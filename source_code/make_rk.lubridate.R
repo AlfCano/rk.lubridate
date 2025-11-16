@@ -18,7 +18,7 @@ local({
     ),
     about = list(
       desc = "An RKWard plugin package for working with dates and times data using the 'lubridate' library.",
-      version = "0.0.1",
+      version = "0.0.2",
       url = "https://github.com/AlfCano/rk.lubridate",
       license = "GPL (>= 3)"
     )
@@ -35,7 +35,31 @@ local({
   js_print_std <- '
     var save_name = getValue("save_result.objectname");
     echo("rk.header(\\"lubridate Operation Results\\")\\n");
-    echo("rk.header(\\"Result saved to object: " + save_name + "\\", level=3)\\n");
+    if(getValue("save_result.active")){
+      echo("rk.header(\\"Result saved to object: " + save_name + "\\", level=3)\\n");
+    }
+  '
+
+  js_print_period <- '
+    var save_name = getValue("save_period.objectname");
+    echo("rk.header(\\"Create Period Results\\")\\n");
+    if(getValue("save_period.active")){
+        echo("rk.header(\\"Result saved to object: " + save_name + "\\", level=3)\\n");
+    }
+  '
+  js_print_duration <- '
+    var save_name = getValue("save_duration.objectname");
+    echo("rk.header(\\"Create Duration Results\\")\\n");
+    if(getValue("save_duration.active")){
+        echo("rk.header(\\"Result saved to object: " + save_name + "\\", level=3)\\n");
+    }
+  '
+  js_print_interval <- '
+    var save_name = getValue("save_interval.objectname");
+    echo("rk.header(\\"Create Interval Results\\")\\n");
+    if(getValue("save_interval.active")){
+      echo("rk.header(\\"Result saved to object: " + save_name + "\\", level=3)\\n");
+    }
   '
 
   locale_presets <- list(
@@ -57,6 +81,16 @@ local({
   parse_varselector <- rk.XML.varselector(id.name="parse_varselector")
   parse_varslot <- rk.XML.varslot("Object with date-time strings", source="parse_varselector", id.name="parse_varslot", required=FALSE)
   parse_manual_input <- rk.XML.input("OR enter a vector manually (e.g., c('2025-01-20'))", id.name="parse_manual_input")
+  preview_pane <- rk.XML.preview(mode="data")
+
+  parse_functions_list <- list(
+    "ymd" = list(val="ymd", chk=TRUE), "ymd_h" = list(val="ymd_h"), "ymd_hm" = list(val="ymd_hm"), "ymd_hms" = list(val="ymd_hms"),
+    "ydm" = list(val="ydm"), "ydm_h" = list(val="ydm_h"), "ydm_hm" = list(val="ydm_hm"), "ydm_hms" = list(val="ydm_hms"),
+    "mdy" = list(val="mdy"), "mdy_h" = list(val="mdy_h"), "mdy_hm" = list(val="mdy_hm"), "mdy_hms" = list(val="mdy_hms"),
+    "myd" = list(val="myd"), "myd_h" = list(val="myd_h"), "myd_hm" = list(val="myd_hm"), "myd_hms" = list(val="myd_hms"),
+    "dmy" = list(val="dmy"), "dmy_h" = list(val="dmy_h"), "dmy_hm" = list(val="dmy_hm"), "dmy_hms" = list(val="dmy_hms"),
+    "dym" = list(val="dym"), "dym_h" = list(val="dym_h"), "dym_hm" = list(val="dym_hm"), "dym_hms" = list(val="dym_hms")
+  )
 
   parse_dialog <- rk.XML.dialog(
     label = "Parse Date-Times with lubridate",
@@ -68,37 +102,40 @@ local({
                 parse_manual_input,
                 label="Data Source"
             ),
-            rk.XML.dropdown(label = "Select parsing order", id.name = "parse_order", options = list(
-                "Year, Month, Day" = list(val = "ymd", chk = TRUE),
-                "Year, Month, Day, Hour, Minute, Second" = list(val = "ymd_hms"),
-                "Month, Day, Year" = list(val = "mdy"),
-                "Day, Month, Year" = list(val = "dmy")
-            )),
+            rk.XML.dropdown(label = "Select parsing function", id.name = "parse_order", options = parse_functions_list),
             rk.XML.input("Optional: Time zone", id.name="parse_tz"),
             save_obj
-        )
+        ),
+        preview_pane
     )
   )
 
-  js_calc_parse <- '
-    var date_source = getValue("parse_varslot");
-    if(!date_source){
-        date_source = getValue("parse_manual_input");
+  js_common_parse_logic <- '
+    var manual_input = getValue("parse_manual_input");
+    var date_source;
+    var r_command;
+
+    if(manual_input){
+        date_source = manual_input;
+    } else {
+        date_source = getValue("parse_varslot");
     }
 
     if(date_source){
         var order = getValue("parse_order");
         var tz = getValue("parse_tz");
-        var code = "lubridate_result <- lubridate::" + order + "(" + date_source;
+        r_command = "lubridate::" + order + "(" + date_source;
         if(tz) {
-            code += ", tz=\\"" + tz + "\\"";
+            r_command += ", tz=\\"" + tz + "\\"";
         }
-        code += ");\\n";
-        echo(code);
+        r_command += ")";
     } else {
-        echo("rk.stop(\\"No data source provided. Please select an object or enter a vector manually.\\")");
+        r_command = "stop(\\"No data source provided. Please select an object or enter a vector manually.\\")";
     }
   '
+
+  js_calc_parse <- paste(js_common_parse_logic, 'echo("lubridate_result <- " + r_command + ";\\n");')
+  js_preview_parse <- paste(js_common_parse_logic, 'echo("preview_data <- data.frame(Result=" + r_command + ");\\n");')
 
   # =========================================================================================
   # Component: Format Dates as Text
@@ -116,24 +153,29 @@ local({
   format_custom_input <- rk.XML.input(label = "OR enter a custom format string", id.name = "format_custom_input")
   format_help_text <- rk.XML.text("Custom format uses R standard codes, e.g., '%d/%m/%y'.")
 
+  format_varslot <- rk.XML.varslot("Select a date-time object", source = "dt_varselector", required = TRUE, id.name = "dt_object")
+  format_preview_pane <- rk.XML.preview(mode="data")
+
   format_dialog <- rk.XML.dialog(
       label = "Format Dates as Text (with Format String)",
       child = rk.XML.row(
           dt_varselector,
           rk.XML.col(
-              dt_varslot,
+              format_varslot,
               rk.XML.frame(format_dropdown, format_custom_input, format_help_text, label = "Formatting Method"),
               rk.XML.frame(locale_dropdown, locale_help, label="Language"),
               format_save_obj
-          )
+          ),
+          format_preview_pane
       )
   )
 
-  js_calc_format <- '
+  js_common_format_logic <- '
     var date_object = getValue("dt_object");
     var custom_format = getValue("format_custom_input");
     var preset_format = getValue("format_preset_dropdown");
     var locale = getValue("locale_select");
+    var r_command = "";
 
     var format_str = custom_format;
     if(!format_str){
@@ -141,30 +183,29 @@ local({
     }
 
     if(date_object && format_str){
-        var code = "";
         if(locale){
-            code += "original_locale <- Sys.getlocale(\\"LC_TIME\\")\\n";
-            code += "Sys.setlocale(\\"LC_TIME\\", \\"" + locale + "\\")\\n";
-            code += "tryCatch({\\n";
+            r_command += "local({ original_locale <- Sys.getlocale(\\"LC_TIME\\"); ";
+            r_command += "Sys.setlocale(\\"LC_TIME\\", \\"" + locale + "\\"); ";
+            r_command += "tryCatch({ ";
         }
 
-        code += "  formatted_dates <- format(" + date_object + ", format=\\"" + format_str + "\\")\\n";
+        r_command += "format(" + date_object + ", format=\\"" + format_str + "\\")";
 
         if(locale){
-            code += "}, finally = {\\n";
-            code += "  Sys.setlocale(\\"LC_TIME\\", original_locale)\\n";
-            code += "})\\n";
+            r_command += " }, finally = { Sys.setlocale(\\"LC_TIME\\", original_locale) }) })";
         }
-        echo(code);
     } else if (date_object && !format_str) {
-        echo("rk.stop(\\"No format string provided. Please select a preset or enter a custom format.\\")");
+        r_command = "stop(\\"No format string provided. Please select a preset or enter a custom format.\\")";
     }
   '
+
+  js_calc_format <- paste(js_common_format_logic, 'echo("formatted_dates <- " + r_command + ";\\n");')
+  js_preview_format <- paste(js_common_format_logic, 'if(r_command) { echo("preview_data <- data.frame(Result=" + r_command + ");\\n"); }')
 
   format_component <- rk.plugin.component(
     "Format Dates as Text",
     xml = list(dialog = format_dialog),
-    js = list(calculate = js_calc_format, printout = js_print_std),
+    js = list(calculate = js_calc_format, preview = js_preview_format, printout = js_print_std),
     hierarchy = list("data", "Date and Time (lubridate)")
   )
 
@@ -182,22 +223,26 @@ local({
               dt_varslot,
               stamp_fun_slot,
               apply_stamp_save_obj
-          )
+          ),
+          rk.XML.preview(mode="data")
       )
   )
 
-  js_calc_apply_stamp <- '
+  js_common_apply_stamp_logic <- '
       var date_object = getValue("dt_object");
       var stamp_fun = getValue("stamp_fun_slot");
+      var r_command = "";
       if(date_object && stamp_fun){
-          echo("formatted_dates <- " + stamp_fun + "(" + date_object + ")\\n");
+          r_command = stamp_fun + "(" + date_object + ")";
       }
   '
+  js_calc_apply_stamp <- paste(js_common_apply_stamp_logic, 'if(r_command){ echo("formatted_dates <- " + r_command + ";\\n"); }')
+  js_preview_apply_stamp <- paste(js_common_apply_stamp_logic, 'if(r_command){ echo("preview_data <- data.frame(Result=" + r_command + ");\\n"); }')
 
   apply_stamp_component <- rk.plugin.component(
       "Apply Stamping Function",
       xml = list(dialog = apply_stamp_dialog),
-      js = list(calculate = js_calc_apply_stamp, printout = js_print_std),
+      js = list(calculate = js_calc_apply_stamp, preview = js_preview_apply_stamp, printout = js_print_std),
       hierarchy = list("data", "Date and Time (lubridate)")
   )
 
@@ -270,7 +315,46 @@ local({
   # =========================================================================================
   # Component: Get Component from Date
   # =========================================================================================
-  get_component <- rk.plugin.component( "Get Component from Date", xml = list(dialog = rk.XML.dialog( label = "Get Component from Date", child = rk.XML.row( dt_varselector, rk.XML.col( dt_varslot, rk.XML.dropdown(label="Component to get", id.name="get_comp", options=list( "Year" = list(val="year", chk=TRUE), "Month" = list(val="month"), "Day" = list(val="day"), "Hour" = list(val="hour"), "Minute" = list(val="minute"), "Second" = list(val="second"), "Week" = list(val="week"), "Day of year" = list(val="yday") )), rk.XML.cbox("Get label (e.g., 'January')", id.name="get_label"), save_obj ) ) )), js = list(require = "lubridate", calculate = ' var dt_object = getValue("dt_object"); if(dt_object){ var comp = getValue("get_comp"); var label = getValue("get_label.state"); var code = "lubridate_result <- lubridate::" + comp + "(" + dt_object; if(label == 1){ code += ", label=TRUE"; } code += ");\\n"; echo(code); } ', printout = js_print_std), hierarchy = list("data", "Date and Time (lubridate)"))
+  get_comp_dialog <- rk.XML.dialog(
+      label = "Get Component from Date",
+      child = rk.XML.row(
+          dt_varselector,
+          rk.XML.col(
+              dt_varslot,
+              rk.XML.dropdown(label="Component to get", id.name="get_comp", options=list(
+                  "Year" = list(val="year", chk=TRUE), "Month" = list(val="month"), "Day" = list(val="day"),
+                  "Hour" = list(val="hour"), "Minute" = list(val="minute"), "Second" = list(val="second"),
+                  "Week" = list(val="week"), "Day of year" = list(val="yday")
+              )),
+              rk.XML.cbox("Get label (e.g., 'January')", id.name="get_label", value="1"),
+              save_obj
+          ),
+          rk.XML.preview(mode="data")
+      )
+  )
+
+  js_common_get_comp_logic <- '
+    var dt_object = getValue("dt_object");
+    var r_command = "";
+    if(dt_object){
+      var comp = getValue("get_comp");
+      var label = getValue("get_label");
+      r_command = "lubridate::" + comp + "(" + dt_object;
+      if(label == 1){
+        r_command += ", label=TRUE";
+      }
+      r_command += ")";
+    }
+  '
+  js_calc_get_comp <- paste(js_common_get_comp_logic, 'if(r_command){ echo("lubridate_result <- " + r_command + ";\\n"); }')
+  js_preview_get_comp <- paste(js_common_get_comp_logic, 'if(r_command){ echo("preview_data <- data.frame(Result=" + r_command + ");\\n"); }')
+
+  get_component <- rk.plugin.component(
+      "Get Component from Date",
+      xml = list(dialog = get_comp_dialog),
+      js = list(require = "lubridate", calculate = js_calc_get_comp, preview = js_preview_get_comp, printout = js_print_std),
+      hierarchy = list("data", "Date and Time (lubridate)")
+  )
 
   # =========================================================================================
   # Component: Set Component in Date
@@ -280,7 +364,45 @@ local({
   # =========================================================================================
   # Component: Round Date-Times
   # =========================================================================================
-  round_component <- rk.plugin.component( "Round Date-Times", xml = list(dialog = rk.XML.dialog( label = "Round Date-Times", child = rk.XML.row( dt_varselector, rk.XML.col( dt_varslot, rk.XML.dropdown(label="Rounding unit", id.name="round_unit", options=list( "Second" = list(val="second", chk=TRUE), "Minute" = list(val="minute"), "Hour" = list(val="hour"), "Day" = list(val="day"), "Week" = list(val="week"), "Month" = list(val="month"), "Year" = list(val="year") )), rk.XML.radio(label="Rounding function", id.name="round_func", options=list( "Round (nearest)" = list(val="round_date", chk=TRUE), "Floor (round down)" = list(val="floor_date"), "Ceiling (round up)" = list(val="ceiling_date") )), save_obj ) ) )), js = list(require="lubridate", calculate=' var dt_object = getValue("dt_object"); if(!dt_object) return; var func = getValue("round_func"); var unit = getValue("round_unit"); var code = "lubridate_result <- lubridate::" + func + "(" + dt_object + ", unit=\\"" + unit + "\\");\\n"; echo(code); ', printout = js_print_std), hierarchy = list("data", "Date and Time (lubridate)"))
+  round_dialog <- rk.XML.dialog(
+      label = "Round Date-Times",
+      child = rk.XML.row(
+          dt_varselector,
+          rk.XML.col(
+              dt_varslot,
+              rk.XML.dropdown(label="Rounding unit", id.name="round_unit", options=list(
+                  "Second" = list(val="second", chk=TRUE), "Minute" = list(val="minute"), "Hour" = list(val="hour"),
+                  "Day" = list(val="day"), "Week" = list(val="week"), "Month" = list(val="month"), "Year" = list(val="year")
+              )),
+              rk.XML.radio(label="Rounding function", id.name="round_func", options=list(
+                  "Round (nearest)" = list(val="round_date", chk=TRUE),
+                  "Floor (round down)" = list(val="floor_date"),
+                  "Ceiling (round up)" = list(val="ceiling_date")
+              )),
+              save_obj
+          ),
+          rk.XML.preview(mode="data")
+      )
+  )
+
+  js_common_round_logic <- '
+    var dt_object = getValue("dt_object");
+    var r_command = "";
+    if(dt_object){
+        var func = getValue("round_func");
+        var unit = getValue("round_unit");
+        r_command = "lubridate::" + func + "(" + dt_object + ", unit=\\"" + unit + "\\")";
+    }
+  '
+  js_calc_round <- paste(js_common_round_logic, 'if(r_command){ echo("lubridate_result <- " + r_command + ";\\n"); }')
+  js_preview_round <- paste(js_common_round_logic, 'if(r_command){ echo("preview_data <- data.frame(Result=" + r_command + ");\\n"); }')
+
+  round_component <- rk.plugin.component(
+      "Round Date-Times",
+      xml = list(dialog = round_dialog),
+      js = list(require="lubridate", calculate=js_calc_round, preview=js_preview_round, printout = js_print_std),
+      hierarchy = list("data", "Date and Time (lubridate)")
+  )
 
   # =========================================================================================
   # Component: Time Zones
@@ -290,12 +412,28 @@ local({
   # =========================================================================================
   # Component: Create Periods
   # =========================================================================================
-  period_component <- rk.plugin.component( "Create Periods", xml=list(dialog=rk.XML.dialog( label = "Create Periods (human units)", child = rk.XML.col( rk.XML.spinbox("Value", min=0, initial=1, id.name="period_val"), rk.XML.dropdown(label="Unit", id.name="period_unit", options=list( "Years"=list(val="years", chk=TRUE), "Months"=list(val="months"), "Weeks"=list(val="weeks"), "Days"=list(val="days"), "Hours"=list(val="hours"), "Minutes"=list(val="minutes"), "Seconds"=list(val="seconds") )), rk.XML.text("Use for human-centric times, like 'one month from today'."), rk.XML.saveobj("Save period as", initial = "lubridate_period", chk=TRUE, id.name="save_period") ) )), js=list(require="lubridate", calculate=' var val = getValue("period_val"); var unit = getValue("period_unit"); echo("lubridate_period <- lubridate::" + unit + "(" + val + ");\\n"); ', printout=' var save_name = getValue("save_period.objectname"); echo("rk.header(\\"Create Period Results\\")\\n"); echo("rk.header(\\"Result saved to object: " + save_name + "\\", level=3)\\n"); '), hierarchy=list("data", "Date and Time (lubridate)", "Time Spans"))
+  js_common_period_logic <- '
+    var val = getValue("period_val");
+    var unit = getValue("period_unit");
+    var r_command = "lubridate::" + unit + "(" + val + ")";
+  '
+  js_calc_period <- paste(js_common_period_logic, 'echo("lubridate_period <- " + r_command + ";\\n");')
+  js_preview_period <- paste(js_common_period_logic, 'echo("preview_data <- data.frame(Result=as.character(" + r_command + "));\\n");')
+
+  period_component <- rk.plugin.component( "Create Periods", xml=list(dialog=rk.XML.dialog( label = "Create Periods (human units)", child = rk.XML.col( rk.XML.spinbox("Value", min=0, initial=1, id.name="period_val"), rk.XML.dropdown(label="Unit", id.name="period_unit", options=list( "Years"=list(val="years", chk=TRUE), "Months"=list(val="months"), "Weeks"=list(val="weeks"), "Days"=list(val="days"), "Hours"=list(val="hours"), "Minutes"=list(val="minutes"), "Seconds"=list(val="seconds") )), rk.XML.text("Use for human-centric times, like 'one month from today'."), rk.XML.saveobj("Save period as", initial = "lubridate_period", chk=TRUE, id.name="save_period"), rk.XML.preview(mode="data") ) )), js=list(require="lubridate", calculate=js_calc_period, preview=js_preview_period, printout=js_print_period), hierarchy=list("data", "Date and Time (lubridate)", "Time Spans"))
 
   # =========================================================================================
   # Component: Create Durations
   # =========================================================================================
-  duration_component <- rk.plugin.component( "Create Durations", xml=list(dialog=rk.XML.dialog( label = "Create Durations (exact seconds)", child = rk.XML.col( rk.XML.spinbox("Value", min=0, initial=1, id.name="duration_val"), rk.XML.dropdown(label="Unit", id.name="duration_unit", options=list( "Years"=list(val="dyears", chk=TRUE), "Weeks"=list(val="dweeks"), "Days"=list(val="ddays"), "Hours"=list(val="dhours"), "Minutes"=list(val="dminutes"), "Seconds"=list(val="dseconds") )), rk.XML.text("Use for exact time measurements, handles leap years correctly."), rk.XML.saveobj("Save duration as", initial = "lubridate_duration", chk=TRUE, id.name="save_duration") ) )), js=list(require="lubridate", calculate=' var val = getValue("duration_val"); var unit = getValue("duration_unit"); echo("lubridate_duration <- lubridate::" + unit + "(" + val + ");\\n"); ', printout=' var save_name = getValue("save_duration.objectname"); echo("rk.header(\\"Create Duration Results\\")\\n"); echo("rk.header(\\"Result saved to object: " + save_name + "\\", level=3)\\n"); '), hierarchy=list("data", "Date and Time (lubridate)", "Time Spans"))
+  js_common_duration_logic <- '
+    var val = getValue("duration_val");
+    var unit = getValue("duration_unit");
+    var r_command = "lubridate::" + unit + "(" + val + ")";
+  '
+  js_calc_duration <- paste(js_common_duration_logic, 'echo("lubridate_duration <- " + r_command + ";\\n");')
+  js_preview_duration <- paste(js_common_duration_logic, 'echo("preview_data <- data.frame(Result=as.character(" + r_command + "));\\n");')
+
+  duration_component <- rk.plugin.component( "Create Durations", xml=list(dialog=rk.XML.dialog( label = "Create Durations (exact seconds)", child = rk.XML.col( rk.XML.spinbox("Value", min=0, initial=1, id.name="duration_val"), rk.XML.dropdown(label="Unit", id.name="duration_unit", options=list( "Years"=list(val="dyears", chk=TRUE), "Weeks"=list(val="dweeks"), "Days"=list(val="ddays"), "Hours"=list(val="dhours"), "Minutes"=list(val="dminutes"), "Seconds"=list(val="dseconds") )), rk.XML.text("Use for exact time measurements, handles leap years correctly."), rk.XML.saveobj("Save duration as", initial = "lubridate_duration", chk=TRUE, id.name="save_duration"), rk.XML.preview(mode="data") ) )), js=list(require="lubridate", calculate=js_calc_duration, preview=js_preview_duration, printout=js_print_duration), hierarchy=list("data", "Date and Time (lubridate)", "Time Spans"))
 
   # =========================================================================================
   # Component: Create Intervals (REFACTORED with time_length)
@@ -333,38 +471,36 @@ local({
               label = "Output Format"
           ),
           save_obj_interval
-        )
+        ),
+        rk.XML.preview(mode="data")
       )
   )
-  js_calc_interval <- '
+
+  js_common_interval_logic <- '
       var start = getValue("interval_start");
       var end = getValue("interval_end");
       var output_type = getValue("output_type_radio");
       var unit = getValue("unit_select");
+      var r_command = "";
 
       if(start && end){
         var core_interval = "lubridate::interval(" + start + ", " + end + ")";
-        var final_code = "";
-
         if(output_type == "period"){
-            final_code = "as.period(" + core_interval + ", unit=\\"" + unit + "\\")";
+            r_command = "as.period(" + core_interval + ", unit=\\"" + unit + "\\")";
         } else if(output_type == "length"){
-            final_code = "lubridate::time_length(" + core_interval + ", unit=\\"" + unit + "\\")";
+            r_command = "lubridate::time_length(" + core_interval + ", unit=\\"" + unit + "\\")";
         } else {
-            final_code = core_interval;
+            r_command = core_interval;
         }
-        echo("lubridate_interval <- " + final_code + "\\n");
       }
   '
-  js_print_interval <- '
-    var save_name = getValue("save_interval.objectname");
-    echo("rk.header(\\"Create Interval Results\\")\\n");
-    echo("rk.header(\\"Result saved to object: " + save_name + "\\", level=3)\\n");
-  '
+  js_calc_interval <- paste(js_common_interval_logic, 'if(r_command) { echo("lubridate_interval <- " + r_command + ";\\n"); }')
+  js_preview_interval <- paste(js_common_interval_logic, 'if(r_command) { echo("preview_data <- data.frame(Result=as.character(" + r_command + "));\\n"); }')
+
   interval_component <- rk.plugin.component(
       "Create Intervals",
       xml=list(dialog=interval_dialog),
-      js=list(require="lubridate", calculate=js_calc_interval, printout=js_print_interval),
+      js=list(require="lubridate", calculate=js_calc_interval, preview=js_preview_interval, printout=js_print_interval),
       hierarchy=list("data", "Date and Time (lubridate)", "Time Spans")
   )
 
@@ -379,6 +515,7 @@ local({
     js = list(
       require = "lubridate",
       calculate = js_calc_parse,
+      preview = js_preview_parse,
       printout = js_print_std
     ),
     components = list(

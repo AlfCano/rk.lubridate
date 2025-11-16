@@ -4,6 +4,23 @@
 
 This package provides an RKWard GUI front-end for many of the powerful and user-friendly date and time manipulation functions from the **`lubridate`** package. It allows users to perform common date-time operations without writing code.
 
+## What's New in Version 0.0.2
+
+This version significantly improves the user experience by adding interactive data previews and expanding functionality.
+
+*   **Interactive Data Previews**: Most data transformation plugins now feature a **Preview** button. This allows you to see the result of your operation *before* you click "Submit," ensuring your settings are correct. Previews have been added to:
+    *   Parse Date-Times
+    *   Format Dates as Text
+    *   Apply Stamping Function
+    *   Get Component from Date
+    *   Round Date-Times
+    *   All Time Span creation dialogs (Periods, Durations, and Intervals).
+*   **Expanded Parsing Functions**: The main "Parse Date-Times" plugin now includes a comprehensive dropdown list of all `lubridate` parsing functions (e.g., `ymd_hms`, `dmy_hm`, `myd`, etc.), providing much greater flexibility.
+*   **Cleaner Output**: The plugins no longer print the entire resulting data object to the output window by default. Instead, they print a clean confirmation message indicating that the object was created and where it was saved, reducing clutter.
+*   **Bug Fixes**:
+    *   Corrected an issue where manually entering a vector of dates in the "Parse Date-Times" dialog was not working correctly.
+    *   Fixed a critical bug where several plugins were saving results to the wrong object name, ensuring consistent and predictable behavior.
+
 ## Features
 
 The plugin provides a suite of tools organized under the `Data -> Date and Time (lubridate)` menu in RKWard:
@@ -36,7 +53,6 @@ The easiest way to install the plugin is using the `devtools` package in R.
 
 devtools::install_github("AlfCano/rk.lubridate")
 ```
-After installation, restart RKWard, and the new menu entries will be available.
 
 
 ## Usage Example: Extracting the Year from a Date Column
@@ -45,6 +61,7 @@ This example demonstrates how to use the "Get Component from Date" feature to ex
 
 **1. Prepare Sample Data**
 First, we'll use the built-in `airmiles` dataset to create a sample data frame. Run this code in the RKWard console:
+
 ```R
 # Convert the numeric years (e.g., 1937) into a full date string ("1937-01-01")
 date_strings <- paste0(time(airmiles), "-01-01")
@@ -55,6 +72,7 @@ airmiles_df <- data.frame(
   miles = as.numeric(airmiles)
 )
 ```
+
 You will now have a data frame named `airmiles_df` in your workspace with a proper `date` column.
 
 **2. Open the Plugin**
@@ -65,11 +83,15 @@ Go to the RKWard menu: `Data -> Date and Time (lubridate) -> Get Component from 
 *   **Component to get**: From the dropdown menu, ensure **Year** is selected.
 *   **Save result as**: `airmiles_year`.
 
-**4. Submit**
+**4. Preview the Result (Optional)**
+Click the `Preview` button. A new pane will appear showing the first few rows of the result—a column containing the years. This confirms your settings are correct before running the full operation.
+
+**5. Submit**
 Click the `Submit` button. A new object named `airmiles_year` will be created in your workspace containing only the years from the date column.
 
-**5. Verify the Result (Optional)**
+**6. Verify the Result (Optional)**
 You can easily add this new vector as a column to your data frame and view the result. In the R console, run:
+
 ```R
 airmiles_df$year_component <- airmiles_year
 head(airmiles_df)
@@ -77,6 +99,6 @@ head(airmiles_df)
 
 ## Author and License
 
-*   **Author**: Alfonso Cano Robles, assited by Gemini a LLM from Google.
+*   **Author**: Alfonso Cano Robles, assisted by Gemini a LLM from Google.
 *   **Email**: alfonso.cano@correo.buap.mx
 *   **License**: GPL (>= 3)

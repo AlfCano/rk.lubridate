@@ -41,6 +41,7 @@
 				</frame>
 				<saveobject label="Save interval as" checkable="true" checked="true" initial="lubridate_interval" id="save_interval" />
 			</column>
+			<preview label="Preview" id="prv_Preview" mode="data" />
 		</row>
 	</dialog>
 </document>

@@ -34,6 +34,7 @@
 				Use for human-centric times, like 'one month from today'.
 			</text>
 			<saveobject label="Save period as" checkable="true" checked="true" initial="lubridate_period" id="save_period" />
+			<preview label="Preview" id="prv_Preview" mode="data" />
 		</column>
 	</dialog>
 </document>
