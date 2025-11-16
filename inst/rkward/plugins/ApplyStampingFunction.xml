@@ -19,14 +19,14 @@
 		-->
 	</logic>
 	<dialog label="Format Dates as Text (with Stamping Function)">
-		<row id="row_vrSSSSSSPP">
+		<row id="row_vSSSPPSSSP">
 			<varselector id="dt_varselector" />
-			<column id="clm_vrsltddSSS">
+			<column id="clm_vrsltSSSPP">
 				<varslot id="dt_object" label="Select a date-time object" source="dt_varselector" required="true" />
 				<varslot id="stamp_fun_slot" label="Select stamping function" source="dt_varselector" required="true" />
 				<saveobject label="Save result as" checkable="true" checked="true" initial="formatted_dates" id="save_result" />
+				<preview label="Preview" id="prv_Preview" mode="data" />
 			</column>
-			<preview label="Preview" id="prv_Preview" mode="data" />
 		</row>
 	</dialog>
 </document>

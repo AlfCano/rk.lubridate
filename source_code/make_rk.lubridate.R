@@ -18,7 +18,7 @@ local({
     ),
     about = list(
       desc = "An RKWard plugin package for working with dates and times data using the 'lubridate' library.",
-      version = "0.0.2",
+      version = "0.0.3",
       url = "https://github.com/AlfCano/rk.lubridate",
       license = "GPL (>= 3)"
     )
@@ -92,6 +92,7 @@ local({
     "dym" = list(val="dym"), "dym_h" = list(val="dym_h"), "dym_hm" = list(val="dym_hm"), "dym_hms" = list(val="dym_hms")
   )
 
+  # CORRECTED: Moved preview_pane inside the rk.XML.col()
   parse_dialog <- rk.XML.dialog(
     label = "Parse Date-Times with lubridate",
     child = rk.XML.row(
@@ -104,9 +105,9 @@ local({
             ),
             rk.XML.dropdown(label = "Select parsing function", id.name = "parse_order", options = parse_functions_list),
             rk.XML.input("Optional: Time zone", id.name="parse_tz"),
-            save_obj
-        ),
-        preview_pane
+            save_obj,
+            preview_pane
+        )
     )
   )
 
@@ -156,6 +157,7 @@ local({
   format_varslot <- rk.XML.varslot("Select a date-time object", source = "dt_varselector", required = TRUE, id.name = "dt_object")
   format_preview_pane <- rk.XML.preview(mode="data")
 
+  # CORRECTED: Moved format_preview_pane inside the rk.XML.col()
   format_dialog <- rk.XML.dialog(
       label = "Format Dates as Text (with Format String)",
       child = rk.XML.row(
@@ -164,9 +166,9 @@ local({
               format_varslot,
               rk.XML.frame(format_dropdown, format_custom_input, format_help_text, label = "Formatting Method"),
               rk.XML.frame(locale_dropdown, locale_help, label="Language"),
-              format_save_obj
-          ),
-          format_preview_pane
+              format_save_obj,
+              format_preview_pane
+          )
       )
   )
 
@@ -215,6 +217,7 @@ local({
   stamp_fun_slot <- rk.XML.varslot("Select stamping function", source="dt_varselector", required=TRUE, id.name="stamp_fun_slot")
   apply_stamp_save_obj <- rk.XML.saveobj("Save result as", initial = "formatted_dates", chk=TRUE, id.name="save_result")
 
+  # CORRECTED: Moved preview pane inside the rk.XML.col()
   apply_stamp_dialog <- rk.XML.dialog(
       label = "Format Dates as Text (with Stamping Function)",
       child = rk.XML.row(
@@ -222,9 +225,9 @@ local({
           rk.XML.col(
               dt_varslot,
               stamp_fun_slot,
-              apply_stamp_save_obj
-          ),
-          rk.XML.preview(mode="data")
+              apply_stamp_save_obj,
+              rk.XML.preview(mode="data")
+          )
       )
   )
 
@@ -315,6 +318,7 @@ local({
   # =========================================================================================
   # Component: Get Component from Date
   # =========================================================================================
+  # CORRECTED: Moved preview pane inside the rk.XML.col()
   get_comp_dialog <- rk.XML.dialog(
       label = "Get Component from Date",
       child = rk.XML.row(
@@ -327,9 +331,9 @@ local({
                   "Week" = list(val="week"), "Day of year" = list(val="yday")
               )),
               rk.XML.cbox("Get label (e.g., 'January')", id.name="get_label", value="1"),
-              save_obj
-          ),
-          rk.XML.preview(mode="data")
+              save_obj,
+              rk.XML.preview(mode="data")
+          )
       )
   )
 
@@ -364,6 +368,7 @@ local({
   # =========================================================================================
   # Component: Round Date-Times
   # =========================================================================================
+  # CORRECTED: Moved preview pane inside the rk.XML.col()
   round_dialog <- rk.XML.dialog(
       label = "Round Date-Times",
       child = rk.XML.row(
@@ -379,9 +384,9 @@ local({
                   "Floor (round down)" = list(val="floor_date"),
                   "Ceiling (round up)" = list(val="ceiling_date")
               )),
-              save_obj
-          ),
-          rk.XML.preview(mode="data")
+              save_obj,
+              rk.XML.preview(mode="data")
+          )
       )
   )
 
@@ -458,6 +463,7 @@ local({
   unit_dropdown <- rk.XML.dropdown(label="Unit for Period/Length:", options=unit_options, id.name="unit_select")
 
   save_obj_interval <- rk.XML.saveobj("Save interval as", initial = "lubridate_interval", chk=TRUE, id.name="save_interval")
+  # CORRECTED: Moved preview pane inside the rk.XML.col()
   interval_dialog <- rk.XML.dialog(
       label = "Create Interval (from start and end)",
       child = rk.XML.row(
@@ -470,9 +476,9 @@ local({
               unit_dropdown,
               label = "Output Format"
           ),
-          save_obj_interval
-        ),
-        rk.XML.preview(mode="data")
+          save_obj_interval,
+          rk.XML.preview(mode="data")
+        )
       )
   )
 

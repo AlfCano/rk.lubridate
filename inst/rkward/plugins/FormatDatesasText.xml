@@ -52,8 +52,8 @@
 					</text>
 				</frame>
 				<saveobject label="Save formatted text as" checkable="true" checked="true" initial="formatted_dates" id="save_result" />
+				<preview label="Preview" id="prv_Preview" mode="data" />
 			</column>
-			<preview label="Preview" id="prv_Preview" mode="data" />
 		</row>
 	</dialog>
 </document>

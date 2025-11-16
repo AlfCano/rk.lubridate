@@ -1,8 +1,22 @@
 # rk.lubridate: An RKWard Plugin for the 'lubridate' Package
 
+![Version](https://img.shields.io/badge/Version-0.0.3-blue.svg)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 This package provides an RKWard GUI front-end for many of the powerful and user-friendly date and time manipulation functions from the **`lubridate`** package. It allows users to perform common date-time operations without writing code.
+
+## What's New in Version 0.0.3
+
+This version addresses critical bug fixes related to object saving, ensuring predictable and correct behavior across all plugins.
+
+*   **Corrected Object Saving**: Fixed a significant bug where several plugins were not respecting the `initial` object name defined in their user interface. This affected the following plugins:
+    *   **Format Dates as Text**: Now correctly saves the result to `formatted_dates` by default, instead of the generic `lubridate_result`.
+    *   **Apply Stamping Function**: Also now correctly saves to `formatted_dates` by default.
+    *   **Time Span Plugins** (Create Periods, Durations, and Intervals): These now correctly save to `lubridate_period`, `lubridate_duration`, and `lubridate_interval` respectively.
+    
+    This change ensures that the hard-coded object name in the R script matches the save object name in the UI, adhering to best practices and preventing unexpected behavior.
+
+*   **XML Layout Fix for Previews**: Resolved a fatal error that occurred in some versions of RKWard where the UI dialog for plugins with a preview pane would fail to load. The XML structure has been corrected to ensure compatibility.
 
 ## What's New in Version 0.0.2
 

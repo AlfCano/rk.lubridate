@@ -20,7 +20,7 @@
 		name="rk.lubridate"
 		shortinfo="An RKWard plugin package for working with dates and times data using the 'lubridate' library."
 		longinfo="An RKWard plugin package for working with dates and times data using the 'lubridate' library."
-		version="0.0.2"
+		version="0.0.3"
 		releasedate="2025-11-15"
 		url="https://github.com/AlfCano/rk.lubridate"
 		license="GPL (&gt;= 3)"
