@@ -1,0 +1,32 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<code file="CheckOverlaps.js" />
+	<help file="CheckOverlaps.rkh" />
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<logic>
+		<!--
+			<convert id="!edit!" sources="!edit!" mode="equals" standard="!edit!" />
+		-->
+		<!--
+			<connect governor="!edit!.state" client="!edit!.enabled" />
+		-->
+	</logic>
+	<dialog label="Check Date Overlaps (%within%)">
+		<row id="row_vDOIOSPPDO">
+			<varselector id="dt_varselector" />
+			<column id="clm_vrsDOIOSPP">
+				<varslot id="overlap_date" label="Date Object" source="dt_varselector" required="true" />
+				<varslot id="overlap_int" label="Interval Object" source="dt_varselector" required="true" />
+				<saveobject label="Save logical result as" checkable="true" checked="true" initial="is_within" id="save_result" />
+				<preview label="Preview" id="prv_Preview" mode="data" />
+			</column>
+		</row>
+	</dialog>
+</document>

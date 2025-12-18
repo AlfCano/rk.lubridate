@@ -8,27 +8,15 @@ function preview(){
     var preset_format = getValue("format_preset_dropdown");
     var locale = getValue("locale_select");
     var r_command = "";
-
     var format_str = custom_format;
-    if(!format_str){
-        format_str = preset_format;
-    }
-
+    if(!format_str){ format_str = preset_format; }
     if(date_object && format_str){
         if(locale){
-            r_command += "local({ original_locale <- Sys.getlocale(\"LC_TIME\"); ";
-            r_command += "Sys.setlocale(\"LC_TIME\", \"" + locale + "\"); ";
-            r_command += "tryCatch({ ";
+            r_command += "local({ original_locale <- Sys.getlocale(\"LC_TIME\"); Sys.setlocale(\"LC_TIME\", \"" + locale + "\"); tryCatch({ ";
         }
-
         r_command += "format(" + date_object + ", format=\"" + format_str + "\")";
-
-        if(locale){
-            r_command += " }, finally = { Sys.setlocale(\"LC_TIME\", original_locale) }) })";
-        }
-    } else if (date_object && !format_str) {
-        r_command = "stop(\"No format string provided. Please select a preset or enter a custom format.\")";
-    }
+        if(locale){ r_command += " }, finally = { Sys.setlocale(\"LC_TIME\", original_locale) }) })"; }
+    } else if (date_object && !format_str) { r_command = "stop(\"No format string provided.\")"; }
    if(r_command) { echo("preview_data <- data.frame(Result=" + r_command + ");\n"); }
 }
 
@@ -48,27 +36,15 @@ function calculate(is_preview){
     var preset_format = getValue("format_preset_dropdown");
     var locale = getValue("locale_select");
     var r_command = "";
-
     var format_str = custom_format;
-    if(!format_str){
-        format_str = preset_format;
-    }
-
+    if(!format_str){ format_str = preset_format; }
     if(date_object && format_str){
         if(locale){
-            r_command += "local({ original_locale <- Sys.getlocale(\"LC_TIME\"); ";
-            r_command += "Sys.setlocale(\"LC_TIME\", \"" + locale + "\"); ";
-            r_command += "tryCatch({ ";
+            r_command += "local({ original_locale <- Sys.getlocale(\"LC_TIME\"); Sys.setlocale(\"LC_TIME\", \"" + locale + "\"); tryCatch({ ";
         }
-
         r_command += "format(" + date_object + ", format=\"" + format_str + "\")";
-
-        if(locale){
-            r_command += " }, finally = { Sys.setlocale(\"LC_TIME\", original_locale) }) })";
-        }
-    } else if (date_object && !format_str) {
-        r_command = "stop(\"No format string provided. Please select a preset or enter a custom format.\")";
-    }
+        if(locale){ r_command += " }, finally = { Sys.setlocale(\"LC_TIME\", original_locale) }) })"; }
+    } else if (date_object && !format_str) { r_command = "stop(\"No format string provided.\")"; }
    echo("formatted_dates <- " + r_command + ";\n");
 }
 

@@ -2,14 +2,7 @@
 // perhaps don't make changes here, but in the rkwarddev script instead!
 
 function preview(){
-	
-      var date_object = getValue("dt_object");
-      var stamp_fun = getValue("stamp_fun_slot");
-      var r_command = "";
-      if(date_object && stamp_fun){
-          r_command = stamp_fun + "(" + date_object + ")";
-      }
-   if(r_command){ echo("preview_data <- data.frame(Result=" + r_command + ");\n"); }
+	 var date_object = getValue("dt_object"); var stamp_fun = getValue("stamp_fun_slot"); var r_command = ""; if(date_object && stamp_fun){ r_command = stamp_fun + "(" + date_object + ")"; }  if(r_command){ echo("preview_data <- data.frame(Result=" + r_command + ");\n"); }
 }
 
 function preprocess(is_preview){
@@ -22,14 +15,7 @@ function calculate(is_preview){
 
 
 	// the R code to be evaluated
-
-      var date_object = getValue("dt_object");
-      var stamp_fun = getValue("stamp_fun_slot");
-      var r_command = "";
-      if(date_object && stamp_fun){
-          r_command = stamp_fun + "(" + date_object + ")";
-      }
-   if(r_command){ echo("formatted_dates <- " + r_command + ";\n"); }
+ var date_object = getValue("dt_object"); var stamp_fun = getValue("stamp_fun_slot"); var r_command = ""; if(date_object && stamp_fun){ r_command = stamp_fun + "(" + date_object + ")"; }  if(r_command){ echo("formatted_dates <- " + r_command + ";\n"); }
 }
 
 function printout(is_preview){

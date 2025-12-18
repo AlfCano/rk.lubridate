@@ -2,7 +2,14 @@
 // perhaps don't make changes here, but in the rkwarddev script instead!
 
 function preview(){
-	 var dt_object = getValue("dt_object"); var r_command = ""; if(dt_object){ var comp = getValue("get_comp"); var label = getValue("get_label"); r_command = "lubridate::" + comp + "(" + dt_object; if(label == 1){ r_command += ", label=TRUE"; } r_command += ")"; }  if(r_command){ echo("preview_data <- data.frame(Result=" + r_command + ");\n"); }
+	
+    var dt = getValue("dt_object"); var act = getValue("align_act");
+    var r_command = "";
+    if(act == "rollback") r_command = "lubridate::rollback(" + dt + ")";
+    else if(act == "floor") r_command = "lubridate::floor_date(" + dt + ", unit=\"month\")";
+    else if(act == "ceiling") r_command = "lubridate::ceiling_date(" + dt + ", unit=\"month\") - lubridate::days(1)";
+    else r_command = "lubridate::days_in_month(" + dt + ")";
+   echo("preview_data <- data.frame(Result=" + r_command + ");\n");
 }
 
 function preprocess(is_preview){
@@ -19,7 +26,14 @@ function calculate(is_preview){
 
 
 	// the R code to be evaluated
- var dt_object = getValue("dt_object"); var r_command = ""; if(dt_object){ var comp = getValue("get_comp"); var label = getValue("get_label"); r_command = "lubridate::" + comp + "(" + dt_object; if(label == 1){ r_command += ", label=TRUE"; } r_command += ")"; }  if(r_command){ echo("lubridate_result <- " + r_command + ";\n"); }
+
+    var dt = getValue("dt_object"); var act = getValue("align_act");
+    var r_command = "";
+    if(act == "rollback") r_command = "lubridate::rollback(" + dt + ")";
+    else if(act == "floor") r_command = "lubridate::floor_date(" + dt + ", unit=\"month\")";
+    else if(act == "ceiling") r_command = "lubridate::ceiling_date(" + dt + ", unit=\"month\") - lubridate::days(1)";
+    else r_command = "lubridate::days_in_month(" + dt + ")";
+   echo("aligned_date <- " + r_command + ";\n");
 }
 
 function printout(is_preview){
@@ -28,7 +42,7 @@ function printout(is_preview){
 
 	// printout the results
 	if(!is_preview) {
-		new Header(i18n("Get Component from Date results")).print();	
+		new Header(i18n("Align Dates results")).print();	
 	}
     var save_name = getValue("save_result.objectname");
     echo("rk.header(\"lubridate Operation Results\")\n");
@@ -44,7 +58,7 @@ function printout(is_preview){
 		var saveResultParent = getValue("save_result.parent");
 		// assign object to chosen environment
 		if(saveResultActive) {
-			echo(".GlobalEnv$" + saveResult + " <- lubridate_result\n");
+			echo(".GlobalEnv$" + saveResult + " <- aligned_date\n");
 		}	
 	}
 

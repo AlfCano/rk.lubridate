@@ -2,15 +2,7 @@
 // perhaps don't make changes here, but in the rkwarddev script instead!
 
 function preview(){
-	
-    var dt_object = getValue("dt_object");
-    var r_command = "";
-    if(dt_object){
-        var func = getValue("round_func");
-        var unit = getValue("round_unit");
-        r_command = "lubridate::" + func + "(" + dt_object + ", unit=\"" + unit + "\")";
-    }
-   if(r_command){ echo("preview_data <- data.frame(Result=" + r_command + ");\n"); }
+	 var dt_object = getValue("dt_object"); var r_command = ""; if(dt_object){ var func = getValue("round_func"); var unit = getValue("round_unit"); r_command = "lubridate::" + func + "(" + dt_object + ", unit=\"" + unit + "\")"; }  if(r_command){ echo("preview_data <- data.frame(Result=" + r_command + ");\n"); }
 }
 
 function preprocess(is_preview){
@@ -27,15 +19,7 @@ function calculate(is_preview){
 
 
 	// the R code to be evaluated
-
-    var dt_object = getValue("dt_object");
-    var r_command = "";
-    if(dt_object){
-        var func = getValue("round_func");
-        var unit = getValue("round_unit");
-        r_command = "lubridate::" + func + "(" + dt_object + ", unit=\"" + unit + "\")";
-    }
-   if(r_command){ echo("lubridate_result <- " + r_command + ";\n"); }
+ var dt_object = getValue("dt_object"); var r_command = ""; if(dt_object){ var func = getValue("round_func"); var unit = getValue("round_unit"); r_command = "lubridate::" + func + "(" + dt_object + ", unit=\"" + unit + "\")"; }  if(r_command){ echo("lubridate_result <- " + r_command + ";\n"); }
 }
 
 function printout(is_preview){

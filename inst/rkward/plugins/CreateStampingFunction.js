@@ -13,37 +13,7 @@ function calculate(is_preview){
 
 
 	// the R code to be evaluated
-
-    var custom_format = getValue("stamp_custom_input");
-    var preset_format = getValue("stamp_preset_dropdown");
-    var format_str = custom_format;
-    if(!format_str){
-        format_str = preset_format;
-    }
-
-    var locale = getValue("locale_select");
-
-    if(format_str){
-        var code = "lubridate_result <- function(date_object) {\n";
-
-        if (locale) {
-            code += "  original_locale <- Sys.getlocale(\"LC_TIME\")\n";
-            code += "  Sys.setlocale(\"LC_TIME\", \"" + locale + "\")\n";
-            code += "  tryCatch({\n";
-            code += "    format(date_object, format = " + format_str + ")\n";
-            code += "  }, finally = {\n";
-            code += "    Sys.setlocale(\"LC_TIME\", original_locale)\n";
-            code += "  })\n";
-        } else {
-            code += "  format(date_object, format = " + format_str + ")\n";
-        }
-
-        code += "}\n";
-        echo(code);
-    } else {
-        echo("rk.stop(\"No format string provided. Please select a preset or enter a custom format.\")");
-    }
-  
+ var custom_format = getValue("stamp_custom_input"); var preset_format = getValue("stamp_preset_dropdown"); var format_str = custom_format; if(!format_str){ format_str = preset_format; } var locale = getValue("locale_select"); if(format_str){ var code = "lubridate_result <- function(date_object) {\n"; if (locale) { code += "  original_locale <- Sys.getlocale(\"LC_TIME\")\n"; code += "  Sys.setlocale(\"LC_TIME\", \"" + locale + "\")\n"; code += "  tryCatch({\n"; code += "    format(date_object, format = " + format_str + ")\n"; code += "  }, finally = {\n"; code += "    Sys.setlocale(\"LC_TIME\", original_locale)\n"; code += "  })\n"; } else { code += "  format(date_object, format = " + format_str + ")\n"; } code += "}\n"; echo(code); } else { echo("rk.stop(\"No format string provided.\")"); } 
 }
 
 function printout(is_preview){

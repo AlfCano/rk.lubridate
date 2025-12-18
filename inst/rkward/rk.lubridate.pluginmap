@@ -20,8 +20,8 @@
 		name="rk.lubridate"
 		shortinfo="An RKWard plugin package for working with dates and times data using the 'lubridate' library."
 		longinfo="An RKWard plugin package for working with dates and times data using the 'lubridate' library."
-		version="0.0.3"
-		releasedate="2025-11-15"
+		version="0.0.4"
+		releasedate="2025-12-17"
 		url="https://github.com/AlfCano/rk.lubridate"
 		license="GPL (&gt;= 3)"
 	>
@@ -107,6 +107,41 @@
 			label="Create Intervals"
 			type="standard"
 			file="plugins/CreateIntervals.xml"
+		>
+		</component>
+		<component
+			id="cmp_ParseDtTmswthlbrdtShftDts"
+			label="Shift Dates"
+			type="standard"
+			file="plugins/ShiftDates.xml"
+		>
+		</component>
+		<component
+			id="cmp_PrsDtTmswthlbrdtChckOvrlp"
+			label="Check Overlaps"
+			type="standard"
+			file="plugins/CheckOverlaps.xml"
+		>
+		</component>
+		<component
+			id="cmp_PrsDtTmswthlbrdtAdvncdExt"
+			label="Advanced Extractions"
+			type="standard"
+			file="plugins/AdvancedExtractions.xml"
+		>
+		</component>
+		<component
+			id="cmp_ParseDtTmswthlbrdtAlgnDts"
+			label="Align Dates"
+			type="standard"
+			file="plugins/AlignDates.xml"
+		>
+		</component>
+		<component
+			id="cmp_PrsDtTmswthlbrdtDcmlCnvrs"
+			label="Decimal Conversion"
+			type="standard"
+			file="plugins/DecimalConversion.xml"
 		>
 		</component>
 		<component
@@ -259,6 +294,96 @@
 				>
 					<entry
 						component="cmp_PrsDtTmswthlbrdtCrtIntrvl"
+					/>
+				</menu>
+			</menu>
+		</menu>
+		<menu
+			id="data"
+			label="Data"
+		>
+			<menu
+				id="DateandTimelubridate"
+				label="Date and Time (lubridate)"
+			>
+				<menu
+					id="Calculations"
+					label="Calculations"
+				>
+					<entry
+						component="cmp_ParseDtTmswthlbrdtShftDts"
+					/>
+				</menu>
+			</menu>
+		</menu>
+		<menu
+			id="data"
+			label="Data"
+		>
+			<menu
+				id="DateandTimelubridate"
+				label="Date and Time (lubridate)"
+			>
+				<menu
+					id="Calculations"
+					label="Calculations"
+				>
+					<entry
+						component="cmp_PrsDtTmswthlbrdtChckOvrlp"
+					/>
+				</menu>
+			</menu>
+		</menu>
+		<menu
+			id="data"
+			label="Data"
+		>
+			<menu
+				id="DateandTimelubridate"
+				label="Date and Time (lubridate)"
+			>
+				<menu
+					id="Calculations"
+					label="Calculations"
+				>
+					<entry
+						component="cmp_PrsDtTmswthlbrdtAdvncdExt"
+					/>
+				</menu>
+			</menu>
+		</menu>
+		<menu
+			id="data"
+			label="Data"
+		>
+			<menu
+				id="DateandTimelubridate"
+				label="Date and Time (lubridate)"
+			>
+				<menu
+					id="Calculations"
+					label="Calculations"
+				>
+					<entry
+						component="cmp_ParseDtTmswthlbrdtAlgnDts"
+					/>
+				</menu>
+			</menu>
+		</menu>
+		<menu
+			id="data"
+			label="Data"
+		>
+			<menu
+				id="DateandTimelubridate"
+				label="Date and Time (lubridate)"
+			>
+				<menu
+					id="Calculations"
+					label="Calculations"
+				>
+					<entry
+						component="cmp_PrsDtTmswthlbrdtDcmlCnvrs"
 					/>
 				</menu>
 			</menu>

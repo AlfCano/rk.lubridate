@@ -6,24 +6,14 @@ function preview(){
     var manual_input = getValue("parse_manual_input");
     var date_source;
     var r_command;
-
-    if(manual_input){
-        date_source = manual_input;
-    } else {
-        date_source = getValue("parse_varslot");
-    }
-
+    if(manual_input){ date_source = manual_input; } else { date_source = getValue("parse_varslot"); }
     if(date_source){
         var order = getValue("parse_order");
         var tz = getValue("parse_tz");
         r_command = "lubridate::" + order + "(" + date_source;
-        if(tz) {
-            r_command += ", tz=\"" + tz + "\"";
-        }
+        if(tz) { r_command += ", tz=\"" + tz + "\""; }
         r_command += ")";
-    } else {
-        r_command = "stop(\"No data source provided. Please select an object or enter a vector manually.\")";
-    }
+    } else { r_command = "stop(\"No data source provided.\")"; }
    echo("preview_data <- data.frame(Result=" + r_command + ");\n");
 }
 
@@ -45,24 +35,14 @@ function calculate(is_preview){
     var manual_input = getValue("parse_manual_input");
     var date_source;
     var r_command;
-
-    if(manual_input){
-        date_source = manual_input;
-    } else {
-        date_source = getValue("parse_varslot");
-    }
-
+    if(manual_input){ date_source = manual_input; } else { date_source = getValue("parse_varslot"); }
     if(date_source){
         var order = getValue("parse_order");
         var tz = getValue("parse_tz");
         r_command = "lubridate::" + order + "(" + date_source;
-        if(tz) {
-            r_command += ", tz=\"" + tz + "\"";
-        }
+        if(tz) { r_command += ", tz=\"" + tz + "\""; }
         r_command += ")";
-    } else {
-        r_command = "stop(\"No data source provided. Please select an object or enter a vector manually.\")";
-    }
+    } else { r_command = "stop(\"No data source provided.\")"; }
    echo("lubridate_result <- " + r_command + ";\n");
 }
 

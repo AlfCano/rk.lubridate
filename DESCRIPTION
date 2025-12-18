@@ -2,8 +2,8 @@ Package: rk.lubridate
 Type: Package
 Title: An RKWard plugin package for working with dates and times data
         using the 'lubridate' library.
-Version: 0.0.3
-Date: 2025-11-15
+Version: 0.0.4
+Date: 2025-12-17
 Author: Alfonso Cano Robles
 Maintainer: Alfonso Cano Robles <alfonso.cano@correo.buap.mx>
 Enhances: rkward

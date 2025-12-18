@@ -1,0 +1,35 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<code file="DecimalConversion.js" />
+	<help file="DecimalConversion.rkh" />
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<logic>
+		<!--
+			<convert id="!edit!" sources="!edit!" mode="equals" standard="!edit!" />
+		-->
+		<!--
+			<connect governor="!edit!.state" client="!edit!.enabled" />
+		-->
+	</logic>
+	<dialog label="Decimal Conversion">
+		<row id="row_vIOCTD2015">
+			<varselector id="dt_varselector" />
+			<column id="clm_vIOCTD2015">
+				<varslot id="dt_object" label="Input Object" source="dt_varselector" required="true" />
+				<radio id="dec_func" label="Convert To...">
+					<option label="Decimal (e.g. 2015.5)" value="decimal_date" checked="true" />
+					<option label="Date (from Decimal)" value="date_decimal" />
+				</radio>
+				<saveobject label="Save result as" checkable="true" checked="true" initial="dec_result" id="save_result" />
+				<preview label="Preview" id="prv_Preview" mode="data" />
+			</column>
+		</row>
+	</dialog>
+</document>

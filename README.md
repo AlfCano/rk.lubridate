@@ -1,118 +1,103 @@
-# rk.lubridate: An RKWard Plugin for the 'lubridate' Package
+# rk.lubridate: Date & Time Tools for RKWard
 
-![Version](https://img.shields.io/badge/Version-0.0.3-blue.svg)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+![Version](https://img.shields.io/badge/Version-0.0.4-blue.svg)
+![License](https://img.shields.io/badge/License-GPL--3-green.svg)
+![R Version](https://img.shields.io/badge/R-%3E%3D%203.0.0-lightgrey.svg)
 
-This package provides an RKWard GUI front-end for many of the powerful and user-friendly date and time manipulation functions from the **`lubridate`** package. It allows users to perform common date-time operations without writing code.
+This package provides a suite of RKWard plugins that create a graphical user interface for the **[lubridate](https://lubridate.tidyverse.org/)** R package. It simplifies working with dates and times by providing tools for parsing, formatting, arithmetic, and interval analysis without memorizing format codes or function names.
 
-## What's New in Version 0.0.3
+## Features / Included Plugins
 
-This version addresses critical bug fixes related to object saving, ensuring predictable and correct behavior across all plugins.
+This package installs a new submenu in RKWard: **Data > Date and Time (lubridate)**.
 
-*   **Corrected Object Saving**: Fixed a significant bug where several plugins were not respecting the `initial` object name defined in their user interface. This affected the following plugins:
-    *   **Format Dates as Text**: Now correctly saves the result to `formatted_dates` by default, instead of the generic `lubridate_result`.
-    *   **Apply Stamping Function**: Also now correctly saves to `formatted_dates` by default.
-    *   **Time Span Plugins** (Create Periods, Durations, and Intervals): These now correctly save to `lubridate_period`, `lubridate_duration`, and `lubridate_interval` respectively.
-    
-    This change ensures that the hard-coded object name in the R script matches the save object name in the UI, adhering to best practices and preventing unexpected behavior.
+### Core Tools
+*   **Parse Date-Times:** Convert strings (e.g., "2023/01/15") into R Date objects using intuitive "Orders" (ymd, mdy, dmy_hms).
+*   **Format Dates as Text:** Convert dates back into text strings with presets (e.g., "Friday, November 21") or custom format codes.
+*   **Get/Set Components:** Extract or modify specific parts of a date (Year, Month, Weekday, etc.).
+*   **Round Date-Times:** Round dates to the nearest minute, hour, month, or custom unit.
+*   **Time Zones:** Convert time zones (`with_tz`) or fix incorrect time zones (`force_tz`).
 
-*   **XML Layout Fix for Previews**: Resolved a fatal error that occurred in some versions of RKWard where the UI dialog for plugins with a preview pane would fail to load. The XML structure has been corrected to ensure compatibility.
+### Time Spans
+*   **Create Periods:** Human-readable time spans (e.g., "1 Month") that account for leap years/days.
+*   **Create Durations:** Exact time spans in seconds (e.g., "30 Days" = 2592000s).
+*   **Create Intervals:** Define a span of time between a Start Date and End Date.
 
-## What's New in Version 0.0.2
+### Calculations (New in v0.0.4)
+*   **Shift Dates:** Add or subtract time from a date (e.g., Date + 2 Months).
+*   **Check Overlaps:** Check if a date falls inside a specific interval (`%within%`).
+*   **Align Dates:** "Rollback" dates to the last day of the previous month, or find the start/end of a month.
+*   **Advanced Extractions:** Extract Business quarters, semesters, days of the year, or check for Leap Years.
+*   **Decimal Conversion:** Convert dates to decimal years (2023.5) for regression analysis.
 
-This version significantly improves the user experience by adding interactive data previews and expanding functionality.
+## Requirements
 
-*   **Interactive Data Previews**: Most data transformation plugins now feature a **Preview** button. This allows you to see the result of your operation *before* you click "Submit," ensuring your settings are correct. Previews have been added to:
-    *   Parse Date-Times
-    *   Format Dates as Text
-    *   Apply Stamping Function
-    *   Get Component from Date
-    *   Round Date-Times
-    *   All Time Span creation dialogs (Periods, Durations, and Intervals).
-*   **Expanded Parsing Functions**: The main "Parse Date-Times" plugin now includes a comprehensive dropdown list of all `lubridate` parsing functions (e.g., `ymd_hms`, `dmy_hm`, `myd`, etc.), providing much greater flexibility.
-*   **Cleaner Output**: The plugins no longer print the entire resulting data object to the output window by default. Instead, they print a clean confirmation message indicating that the object was created and where it was saved, reducing clutter.
-*   **Bug Fixes**:
-    *   Corrected an issue where manually entering a vector of dates in the "Parse Date-Times" dialog was not working correctly.
-    *   Fixed a critical bug where several plugins were saving results to the wrong object name, ensuring consistent and predictable behavior.
-
-## Features
-
-The plugin provides a suite of tools organized under the `Data -> Date and Time (lubridate)` menu in RKWard:
-
-*   **Parse Date-Times with lubridate**: The main plugin dialog. Convert character or numeric data into proper date-time objects by specifying the order of components (e.g., `ymd`, `mdy_hms`).
-*   **Format Dates as Text**: Convert date-time objects into character strings using either a preset format (e.g., "YYYY-MM-DD") or a custom R format string (e.g., `"%A, %B %d"`). Includes language/locale selection for international date formats.
-*   **Create Stamping Function**: Creates a reusable R function for a specific date format (e.g., `"Hoy es %A, %d-%m-%Y"`). Supports different languages/locales.
-*   **Apply Stamping Function**: Uses a previously created stamping function to format a date-time object.
-*   **Get Component from Date**: Extract a single component from a date object, such as the year, month, day, or week.
-*   **Set Component in Date**: Modify a component of a date object (e.g., change the year to 2025).
-*   **Round Date-Times**: Round dates to the nearest, floor, or ceiling of a specified unit (e.g., round to the nearest month).
-*   **Work with Time Zones**: Change the time zone of a date-time object.
-*   **Time Spans**: A submenu for creating time span objects.
-    *   **Create Periods**: Create human-readable time spans (e.g., "2 months").
-    *   **Create Durations**: Create exact, second-based time spans (e.g., "172800 seconds").
-    *   **Create Intervals**: Create a time span between a start and end date. This powerful component can output:
-        1.  A standard `Interval` object.
-        2.  A human-readable `Period` object (e.g., "3y 2m 5d").
-        3.  A single `numeric` value representing the total time in a chosen unit (e.g., `3.17` years), powered by `lubridate::time_length()`.
+1.  A working installation of **RKWard**.
+2.  The R package **`lubridate`**.
+    ```R
+    install.packages("lubridate")
+    ```
+3.  The R package **`devtools`** (for installation from source).
 
 ## Installation
 
-### Recommended Method: From GitHub
-
-The easiest way to install the plugin is using the `devtools` package in R.
+1.  Open R in RKWard.
+2.  Run the following commands in the R console:
 
 ```R
-# If you don't have devtools, install it first
-# install.packages("devtools")
-
-devtools::install_github("AlfCano/rk.lubridate")
+local({
+## Preparar
+require(devtools)
+## Computar
+  install_github(
+    repo="AlfCano/rk.lubridate"
+  )
+## Imprimir el resultado
+rk.header ("Resultados de Instalar desde git")
+})
 ```
+3.  Restart RKWard to ensure the new menu items appear correctly.
 
+## Usage & Examples
 
-## Usage Example: Extracting the Year from a Date Column
-
-This example demonstrates how to use the "Get Component from Date" feature to extract the year from a date column into a new object.
-
-**1. Prepare Sample Data**
-First, we'll use the built-in `airmiles` dataset to create a sample data frame. Run this code in the RKWard console:
+To test the calculation plugins, create the `test_dates` dataframe using the code below:
 
 ```R
-# Convert the numeric years (e.g., 1937) into a full date string ("1937-01-01")
-date_strings <- paste0(time(airmiles), "-01-01")
+library(lubridate)
+ref_int <- interval(ymd("2023-01-01"), ymd("2023-03-31"))
 
-# Now, create the data frame using the corrected date strings
-airmiles_df <- data.frame(
-  date = as.Date(date_strings),
-  miles = as.numeric(airmiles)
+test_dates <- data.frame(
+  id = 1:5,
+  event_date = as.Date(c("2023-01-15", "2023-02-28", "2023-03-31", "2024-02-29", "2025-12-25")),
+  q1_2023 = rep(ref_int, 5) # Quarter 1 2023 Interval
 )
 ```
 
-You will now have a data frame named `airmiles_df` in your workspace with a proper `date` column.
+### Example 1: Shift Dates (Add 1 Month)
+1.  Navigate to **Data > Date and Time (lubridate) > Calculations > Shift Dates**.
+2.  **Select Date Object:** `test_dates$event_date`.
+3.  **Operation:** Add (+).
+4.  **Amount:** 1.
+5.  **Unit:** Months.
+6.  **Time Type:** Period.
+7.  Click **Submit**.
+    *   *Result:* Jan 15 becomes Feb 15. Feb 28 becomes Mar 28.
 
-**2. Open the Plugin**
-Go to the RKWard menu: `Data -> Date and Time (lubridate) -> Get Component from Date`.
+### Example 2: Check Overlaps
+1.  Navigate to **Data > Date and Time (lubridate) > Calculations > Check Overlaps**.
+2.  **Date Object:** `test_dates$event_date`.
+3.  **Interval Object:** `test_dates$q1_2023`.
+4.  Click **Submit**.
+    *   *Result:* Returns `TRUE` for the dates in Jan, Feb, Mar 2023. Returns `FALSE` for 2024 and 2025.
 
-**3. Configure the Dialog**
-*   **Select a date-time object**: From the object selector list, choose `airmiles_df$date`.
-*   **Component to get**: From the dropdown menu, ensure **Year** is selected.
-*   **Save result as**: `airmiles_year`.
+### Example 3: Align Dates (Rollback)
+1.  Navigate to **Data > Date and Time (lubridate) > Calculations > Align Dates**.
+2.  **Date Object:** `test_dates$event_date`.
+3.  **Action:** Rollback (Last day of prev month).
+4.  Click **Submit**.
+    *   *Result:* "2023-01-15" becomes "2022-12-31". Useful for aligning financial reports.
 
-**4. Preview the Result (Optional)**
-Click the `Preview` button. A new pane will appear showing the first few rows of the result—a column containing the years. This confirms your settings are correct before running the full operation.
+## Author
 
-**5. Submit**
-Click the `Submit` button. A new object named `airmiles_year` will be created in your workspace containing only the years from the date column.
+Alfonso Cano Robles (alfonso.cano@correo.buap.mx)
 
-**6. Verify the Result (Optional)**
-You can easily add this new vector as a column to your data frame and view the result. In the R console, run:
-
-```R
-airmiles_df$year_component <- airmiles_year
-head(airmiles_df)
-```
-
-## Author and License
-
-*   **Author**: Alfonso Cano Robles, assisted by Gemini a LLM from Google.
-*   **Email**: alfonso.cano@correo.buap.mx
-*   **License**: GPL (>= 3)
+Assisted by Gemini, a large language model from Google.

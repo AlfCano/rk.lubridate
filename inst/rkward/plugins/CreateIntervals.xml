@@ -18,25 +18,22 @@
 			<connect governor="!edit!.state" client="!edit!.enabled" />
 		-->
 	</logic>
-	<dialog label="Create Interval (from start and end)">
+	<dialog label="Create Interval">
 		<row id="row_vSEOFOFOTI">
 			<varselector id="dt_varselector" />
 			<column id="clm_vSEOFOFOTI">
-				<varslot id="interval_start" label="Start date-time object" source="dt_varselector" required="true" />
-				<varslot id="interval_end" label="End date-time object" source="dt_varselector" required="true" />
+				<varslot id="interval_start" label="Start date" source="dt_varselector" required="true" />
+				<varslot id="interval_end" label="End date" source="dt_varselector" required="true" />
 				<frame label="Output Format" id="frm_OtptFrmt">
 					<radio id="output_type_radio" label="Output Type">
 						<option label="Interval Object" value="interval" checked="true" />
-						<option label="Period (human-readable, e.g., '3y 2m 5d')" value="period" />
-						<option label="Numeric Length (e.g., 3.17)" value="length" />
+						<option label="Period" value="period" />
+						<option label="Numeric Length" value="length" />
 					</radio>
 					<dropdown id="unit_select" label="Unit for Period/Length:">
 						<option label="Years" value="years" checked="true" />
 						<option label="Months" value="months" />
 						<option label="Days" value="days" />
-						<option label="Hours" value="hours" />
-						<option label="Minutes" value="minutes" />
-						<option label="Seconds" value="seconds" />
 					</dropdown>
 				</frame>
 				<saveobject label="Save interval as" checkable="true" checked="true" initial="lubridate_interval" id="save_interval" />

@@ -1,0 +1,50 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<code file="ShiftDates.js" />
+	<help file="ShiftDates.rkh" />
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<logic>
+		<!--
+			<convert id="!edit!" sources="!edit!" mode="equals" standard="!edit!" />
+		-->
+		<!--
+			<connect governor="!edit!.state" client="!edit!.enabled" />
+		-->
+	</logic>
+	<dialog label="Shift Dates (Add/Subtract)">
+		<row id="row_vSDOSSOASA">
+			<varselector id="dt_varselector" />
+			<column id="clm_vSDOSSOASA">
+				<varslot id="shift_date_obj" label="Select Date Object" source="dt_varselector" required="true" />
+				<frame label="Settings" id="frm_Settings">
+					<radio id="shift_op" label="Operation">
+						<option label="Add (+)" value="add" checked="true" />
+						<option label="Subtract (-)" value="sub" />
+					</radio>
+					<spinbox label="Amount" id="shift_val" initial="1" min="0" />
+					<dropdown id="shift_unit" label="Unit">
+						<option label="Days" value="days" checked="true" />
+						<option label="Weeks" value="weeks" />
+						<option label="Months" value="months" />
+						<option label="Years" value="years" />
+						<option label="Hours" value="hours" />
+					</dropdown>
+					<radio id="shift_type" label="Time Type">
+						<option label="Period (Smart, e.g. 1 month)" value="period" checked="true" />
+						<option label="Duration (Exact, e.g. 30 days)" value="duration" />
+					</radio>
+					<checkbox id="shift_roll" label="Handle end-of-month rollover (%m+%)" value="1" />
+				</frame>
+				<saveobject label="Save result as" checkable="true" checked="true" initial="shifted_date" id="save_result" />
+				<preview label="Preview" id="prv_Preview" mode="data" />
+			</column>
+		</row>
+	</dialog>
+</document>

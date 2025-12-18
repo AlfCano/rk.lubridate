@@ -1,0 +1,37 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<code file="AlignDates.js" />
+	<help file="AlignDates.rkh" />
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<logic>
+		<!--
+			<convert id="!edit!" sources="!edit!" mode="equals" standard="!edit!" />
+		-->
+		<!--
+			<connect governor="!edit!.state" client="!edit!.enabled" />
+		-->
+	</logic>
+	<dialog label="Align Dates">
+		<row id="row_vDOARLSMFE">
+			<varselector id="dt_varselector" />
+			<column id="clm_vDOARLSMFE">
+				<varslot id="dt_object" label="Date Object" source="dt_varselector" required="true" />
+				<dropdown id="align_act" label="Action">
+					<option label="Rollback (Last day of prev month)" value="rollback" checked="true" />
+					<option label="Start of Month (Floor)" value="floor" />
+					<option label="End of Month (Ceiling)" value="ceiling" />
+					<option label="Days in Month" value="days_in_month" />
+				</dropdown>
+				<saveobject label="Save result as" checkable="true" checked="true" initial="aligned_date" id="save_result" />
+				<preview label="Preview" id="prv_Preview" mode="data" />
+			</column>
+		</row>
+	</dialog>
+</document>
